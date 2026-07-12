@@ -70,6 +70,7 @@ model Driver {
   id                String       @id @default(uuid())
   user              User?        @relation(fields: [userId], references: [id])
   userId            String?      @unique
+  name              String
   licenseNumber     String       @unique
   licenseCategory   String
   licenseExpiryDate DateTime
@@ -110,6 +111,7 @@ model Trip {
   driverId        String
   cargoWeight     Float
   plannedDistance Float
+  revenue         Float?     @default(0)
   status          TripStatus @default(DRAFT)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
