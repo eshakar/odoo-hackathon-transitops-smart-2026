@@ -30,6 +30,7 @@ export declare class TripsService {
             contactNumber: string;
             userId: string | null;
             safetyScore: number;
+            tripCompletionRate: number;
         };
         vehicle: {
             type: string;
@@ -69,6 +70,7 @@ export declare class TripsService {
             contactNumber: string;
             userId: string | null;
             safetyScore: number;
+            tripCompletionRate: number;
         };
         vehicle: {
             type: string;

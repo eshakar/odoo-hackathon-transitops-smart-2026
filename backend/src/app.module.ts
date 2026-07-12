@@ -10,9 +10,10 @@ import { TripsModule } from './trips/trips.module';
 import { FinancesModule } from './finances/finances.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ReportsModule } from './reports/reports.module';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, VehiclesModule, MaintenanceModule, DriversModule, TripsModule, FinancesModule, DashboardModule, ReportsModule],
+  imports: [PrismaModule, AuthModule, VehiclesModule, MaintenanceModule, DriversModule, TripsModule, FinancesModule, DashboardModule, ReportsModule, SettingsModule],
   controllers: [AppController],
   providers: [AppService],
 })
