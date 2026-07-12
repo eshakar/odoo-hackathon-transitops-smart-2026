@@ -17,6 +17,7 @@ export declare class DriversService {
         contactNumber: string;
         userId: string | null;
         safetyScore: number;
+        tripCompletionRate: number;
     }>;
     findAll(): Prisma.PrismaPromise<{
         name: string;
@@ -30,6 +31,7 @@ export declare class DriversService {
         contactNumber: string;
         userId: string | null;
         safetyScore: number;
+        tripCompletionRate: number;
     }[]>;
     findOne(id: string): Promise<{
         name: string;
@@ -43,6 +45,7 @@ export declare class DriversService {
         contactNumber: string;
         userId: string | null;
         safetyScore: number;
+        tripCompletionRate: number;
     }>;
     update(id: string, updateDriverDto: UpdateDriverDto): Promise<{
         name: string;
@@ -56,6 +59,7 @@ export declare class DriversService {
         contactNumber: string;
         userId: string | null;
         safetyScore: number;
+        tripCompletionRate: number;
     }>;
     remove(id: string): Promise<{
         name: string;
@@ -69,5 +73,6 @@ export declare class DriversService {
         contactNumber: string;
         userId: string | null;
         safetyScore: number;
+        tripCompletionRate: number;
     }>;
 }

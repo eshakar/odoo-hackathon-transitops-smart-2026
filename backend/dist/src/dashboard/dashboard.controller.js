@@ -18,9 +18,6 @@ const dashboard_service_1 = require("./dashboard.service");
 const get_dashboard_filter_dto_1 = require("./dto/get-dashboard-filter.dto");
 const swagger_1 = require("@nestjs/swagger");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
-const roles_guard_1 = require("../auth/guards/roles.guard");
-const roles_decorator_1 = require("../auth/decorators/roles.decorator");
-const client_1 = require("@prisma/client");
 let DashboardController = class DashboardController {
     dashboardService;
     constructor(dashboardService) {
@@ -33,8 +30,7 @@ let DashboardController = class DashboardController {
 exports.DashboardController = DashboardController;
 __decorate([
     (0, common_1.Get)('kpis'),
-    (0, roles_decorator_1.Roles)(client_1.Role.DRIVER),
-    (0, swagger_1.ApiOperation)({ summary: 'Get Dashboard KPIs (Dispatcher only)' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Get Dashboard KPIs (Accessible to all roles)' }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [get_dashboard_filter_dto_1.GetDashboardFilterDto]),
@@ -43,7 +39,7 @@ __decorate([
 exports.DashboardController = DashboardController = __decorate([
     (0, swagger_1.ApiTags)('Dashboard'),
     (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('dashboard'),
     __metadata("design:paramtypes", [dashboard_service_1.DashboardService])
 ], DashboardController);

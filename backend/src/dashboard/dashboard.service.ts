@@ -19,21 +19,29 @@ export class DashboardService {
       activeVehicles,
       availableVehicles,
       vehiclesInMaintenance,
-      totalOperationalVehicles, // Vehicles that are not RETIRED
+      retiredVehicles,
+      totalOperationalVehicles,
       activeTrips,
       pendingTrips,
       driversOnDuty,
+      recentTrips,
     ] = await Promise.all([
       this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: 'ON_TRIP' } }),
       this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: 'AVAILABLE' } }),
       this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: 'IN_SHOP' } }),
+      this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: 'RETIRED' } }),
       this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: { not: 'RETIRED' } } }),
-      
-      // Trips & Drivers are not filtered by vehicleType/status from query directly, 
-      // but they give an overall system KPI
       this.prisma.trip.count({ where: { status: 'DISPATCHED' } }),
       this.prisma.trip.count({ where: { status: 'DRAFT' } }),
       this.prisma.driver.count({ where: { status: 'ON_TRIP' } }),
+      this.prisma.trip.findMany({
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          vehicle: true,
+          driver: true,
+        },
+      }),
     ]);
 
     const fleetUtilization = totalOperationalVehicles > 0 
@@ -41,13 +49,22 @@ export class DashboardService {
       : 0;
 
     return {
-      activeVehicles,
-      availableVehicles,
-      vehiclesInMaintenance,
-      activeTrips,
-      pendingTrips,
-      driversOnDuty,
-      fleetUtilization: parseFloat(fleetUtilization.toFixed(2)),
+      kpis: {
+        activeVehicles,
+        availableVehicles,
+        vehiclesInMaintenance,
+        activeTrips,
+        pendingTrips,
+        driversOnDuty,
+        fleetUtilization: parseFloat(fleetUtilization.toFixed(2)),
+      },
+      vehicleStatusBreakdown: {
+        Available: availableVehicles,
+        'On Trip': activeVehicles,
+        'In Shop': vehiclesInMaintenance,
+        Retired: retiredVehicles,
+      },
+      recentTrips,
     };
   }
 }

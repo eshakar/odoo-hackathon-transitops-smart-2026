@@ -24,26 +24,44 @@ let DashboardService = class DashboardService {
             vehicleWhereInput.type = vehicleType;
         if (vehicleStatus)
             vehicleWhereInput.status = vehicleStatus;
-        const [activeVehicles, availableVehicles, vehiclesInMaintenance, totalOperationalVehicles, activeTrips, pendingTrips, driversOnDuty,] = await Promise.all([
+        const [activeVehicles, availableVehicles, vehiclesInMaintenance, retiredVehicles, totalOperationalVehicles, activeTrips, pendingTrips, driversOnDuty, recentTrips,] = await Promise.all([
             this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: 'ON_TRIP' } }),
             this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: 'AVAILABLE' } }),
             this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: 'IN_SHOP' } }),
+            this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: 'RETIRED' } }),
             this.prisma.vehicle.count({ where: { ...vehicleWhereInput, status: { not: 'RETIRED' } } }),
             this.prisma.trip.count({ where: { status: 'DISPATCHED' } }),
             this.prisma.trip.count({ where: { status: 'DRAFT' } }),
             this.prisma.driver.count({ where: { status: 'ON_TRIP' } }),
+            this.prisma.trip.findMany({
+                take: 5,
+                orderBy: { createdAt: 'desc' },
+                include: {
+                    vehicle: true,
+                    driver: true,
+                },
+            }),
         ]);
         const fleetUtilization = totalOperationalVehicles > 0
             ? (activeVehicles / totalOperationalVehicles) * 100
             : 0;
         return {
-            activeVehicles,
-            availableVehicles,
-            vehiclesInMaintenance,
-            activeTrips,
-            pendingTrips,
-            driversOnDuty,
-            fleetUtilization: parseFloat(fleetUtilization.toFixed(2)),
+            kpis: {
+                activeVehicles,
+                availableVehicles,
+                vehiclesInMaintenance,
+                activeTrips,
+                pendingTrips,
+                driversOnDuty,
+                fleetUtilization: parseFloat(fleetUtilization.toFixed(2)),
+            },
+            vehicleStatusBreakdown: {
+                Available: availableVehicles,
+                'On Trip': activeVehicles,
+                'In Shop': vehiclesInMaintenance,
+                Retired: retiredVehicles,
+            },
+            recentTrips,
         };
     }
 };

@@ -19,12 +19,13 @@ const trips_module_1 = require("./trips/trips.module");
 const finances_module_1 = require("./finances/finances.module");
 const dashboard_module_1 = require("./dashboard/dashboard.module");
 const reports_module_1 = require("./reports/reports.module");
+const settings_module_1 = require("./settings/settings.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule, auth_module_1.AuthModule, vehicles_module_1.VehiclesModule, maintenance_module_1.MaintenanceModule, drivers_module_1.DriversModule, trips_module_1.TripsModule, finances_module_1.FinancesModule, dashboard_module_1.DashboardModule, reports_module_1.ReportsModule],
+        imports: [prisma_module_1.PrismaModule, auth_module_1.AuthModule, vehicles_module_1.VehiclesModule, maintenance_module_1.MaintenanceModule, drivers_module_1.DriversModule, trips_module_1.TripsModule, finances_module_1.FinancesModule, dashboard_module_1.DashboardModule, reports_module_1.ReportsModule, settings_module_1.SettingsModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
