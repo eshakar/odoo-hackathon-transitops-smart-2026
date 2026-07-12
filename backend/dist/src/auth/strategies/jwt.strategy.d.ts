@@ -14,6 +14,8 @@ export declare class JwtStrategy extends JwtStrategy_base {
         name: string;
         role: import("@prisma/client").$Enums.Role;
         id: string;
+        failedLoginAttempts: number;
+        isLocked: boolean;
         createdAt: Date;
         updatedAt: Date;
     }>;

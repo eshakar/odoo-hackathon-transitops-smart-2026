@@ -43,9 +43,9 @@ __decorate([
 ], AuthController.prototype, "register", null);
 __decorate([
     (0, common_1.Post)('login'),
-    (0, swagger_1.ApiOperation)({ summary: 'Login and get a JWT token' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Returns a JWT token.' }),
-    (0, swagger_1.ApiResponse)({ status: 401, description: 'Invalid credentials.' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Login and get a JWT token along with user details' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Returns a JWT token and user details.' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Invalid credentials or account locked.' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [login_dto_1.LoginDto]),

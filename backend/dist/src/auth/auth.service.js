@@ -75,15 +75,39 @@ let AuthService = class AuthService {
         const user = await this.prisma.user.findUnique({
             where: { email: dto.email },
         });
-        if (!user) {
+        if (!user || user.role !== dto.role) {
             throw new common_1.UnauthorizedException('Invalid credentials');
+        }
+        if (user.isLocked) {
+            throw new common_1.UnauthorizedException('Account is locked due to too many failed attempts');
         }
         const isPasswordValid = await bcrypt.compare(dto.password, user.password);
         if (!isPasswordValid) {
-            throw new common_1.UnauthorizedException('Invalid credentials');
+            const failedAttempts = user.failedLoginAttempts + 1;
+            const isLocked = failedAttempts >= 5;
+            await this.prisma.user.update({
+                where: { id: user.id },
+                data: { failedLoginAttempts: failedAttempts, isLocked },
+            });
+            if (isLocked) {
+                throw new common_1.UnauthorizedException('Account is locked due to too many failed attempts');
+            }
+            else {
+                const attemptsLeft = 5 - failedAttempts;
+                throw new common_1.UnauthorizedException(`Invalid credentials. You have ${attemptsLeft} attempt(s) left.`);
+            }
         }
-        const payload = { email: user.email, sub: user.id };
+        if (user.failedLoginAttempts > 0) {
+            await this.prisma.user.update({
+                where: { id: user.id },
+                data: { failedLoginAttempts: 0 },
+            });
+        }
+        const payload = { email: user.email, sub: user.id, role: user.role };
+        const { password, ...userDetails } = user;
+        userDetails.failedLoginAttempts = 0;
         return {
+            user: userDetails,
             access_token: this.jwtService.sign(payload),
         };
     }

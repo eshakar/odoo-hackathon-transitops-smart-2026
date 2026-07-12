@@ -18,9 +18,9 @@ export class AuthController {
   }
 
   @Post('login')
-  @ApiOperation({ summary: 'Login and get a JWT token' })
-  @ApiResponse({ status: 200, description: 'Returns a JWT token.' })
-  @ApiResponse({ status: 401, description: 'Invalid credentials.' })
+  @ApiOperation({ summary: 'Login and get a JWT token along with user details' })
+  @ApiResponse({ status: 200, description: 'Returns a JWT token and user details.' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials or account locked.' })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
