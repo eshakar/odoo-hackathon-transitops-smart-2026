@@ -111,6 +111,7 @@ model Trip {
   driverId        String
   cargoWeight     Float
   plannedDistance Float
+  revenue         Float?     @default(0)
   status          TripStatus @default(DRAFT)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt

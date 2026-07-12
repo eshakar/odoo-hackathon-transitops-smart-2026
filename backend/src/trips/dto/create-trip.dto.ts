@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, IsUUID, Min } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsUUID, Min, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTripDto {
@@ -31,4 +31,9 @@ export class CreateTripDto {
   @IsNumber()
   @Min(0)
   plannedDistance: number;
+
+  @ApiProperty({ example: 1250.5, description: 'Optional revenue generated from this trip', required: false })
+  @IsOptional()
+  @IsNumber()
+  revenue?: number;
 }

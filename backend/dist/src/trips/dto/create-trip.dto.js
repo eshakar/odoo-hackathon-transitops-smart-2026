@@ -19,6 +19,7 @@ class CreateTripDto {
     driverId;
     cargoWeight;
     plannedDistance;
+    revenue;
 }
 exports.CreateTripDto = CreateTripDto;
 __decorate([
@@ -57,4 +58,10 @@ __decorate([
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateTripDto.prototype, "plannedDistance", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 1250.5, description: 'Optional revenue generated from this trip', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], CreateTripDto.prototype, "revenue", void 0);
 //# sourceMappingURL=create-trip.dto.js.map

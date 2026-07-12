@@ -5,4 +5,5 @@ export declare class CreateTripDto {
     driverId: string;
     cargoWeight: number;
     plannedDistance: number;
+    revenue?: number;
 }
