@@ -1,16 +1,27 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { PrismaService } from '../prisma/prisma.service';
+
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class VehiclesService {
   constructor(private prisma: PrismaService) {}
 
-  create(createVehicleDto: CreateVehicleDto) {
-    return this.prisma.vehicle.create({
-      data: createVehicleDto,
-    });
+  async create(createVehicleDto: CreateVehicleDto) {
+    try {
+      return await this.prisma.vehicle.create({
+        data: createVehicleDto,
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ConflictException('Vehicle with this registration number already exists');
+        }
+      }
+      throw error;
+    }
   }
 
   findAll() {

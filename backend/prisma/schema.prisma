@@ -39,6 +39,12 @@ enum TripStatus {
   CANCELLED
 }
 
+enum MaintenanceStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
 enum ExpenseCategory {
   FUEL
   MAINTENANCE
@@ -112,15 +118,15 @@ model Trip {
 }
 
 model MaintenanceLog {
-  id          String   @id @default(uuid())
-  vehicle     Vehicle  @relation(fields: [vehicleId], references: [id])
+  id          String            @id @default(uuid())
+  vehicle     Vehicle           @relation(fields: [vehicleId], references: [id])
   vehicleId   String
-  description String
+  serviceType String
   cost        Float
-  date        DateTime @default(now())
-  isClosed    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  date        DateTime          @default(now())
+  status      MaintenanceStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model FuelLog {

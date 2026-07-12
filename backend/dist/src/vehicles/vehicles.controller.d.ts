@@ -4,7 +4,7 @@ import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 export declare class VehiclesController {
     private readonly vehiclesService;
     constructor(vehiclesService: VehiclesService);
-    create(createVehicleDto: CreateVehicleDto): import("@prisma/client").Prisma.Prisma__VehicleClient<{
+    create(createVehicleDto: CreateVehicleDto): Promise<{
         type: string;
         id: string;
         createdAt: Date;
@@ -15,7 +15,7 @@ export declare class VehiclesController {
         odometer: number;
         acquisitionCost: number;
         status: import("@prisma/client").$Enums.VehicleStatus;
-    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    }>;
     findAll(): import("@prisma/client").Prisma.PrismaPromise<{
         type: string;
         id: string;

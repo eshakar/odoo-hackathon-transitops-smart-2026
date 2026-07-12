@@ -1,10 +1,11 @@
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 export declare class VehiclesService {
     private prisma;
     constructor(prisma: PrismaService);
-    create(createVehicleDto: CreateVehicleDto): import("@prisma/client").Prisma.Prisma__VehicleClient<{
+    create(createVehicleDto: CreateVehicleDto): Promise<{
         type: string;
         id: string;
         createdAt: Date;
@@ -15,8 +16,8 @@ export declare class VehiclesService {
         odometer: number;
         acquisitionCost: number;
         status: import("@prisma/client").$Enums.VehicleStatus;
-    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
-    findAll(): import("@prisma/client").Prisma.PrismaPromise<{
+    }>;
+    findAll(): Prisma.PrismaPromise<{
         type: string;
         id: string;
         createdAt: Date;
@@ -40,7 +41,7 @@ export declare class VehiclesService {
         acquisitionCost: number;
         status: import("@prisma/client").$Enums.VehicleStatus;
     }>;
-    update(id: string, updateVehicleDto: UpdateVehicleDto): import("@prisma/client").Prisma.Prisma__VehicleClient<{
+    update(id: string, updateVehicleDto: UpdateVehicleDto): Prisma.Prisma__VehicleClient<{
         type: string;
         id: string;
         createdAt: Date;
@@ -51,8 +52,8 @@ export declare class VehiclesService {
         odometer: number;
         acquisitionCost: number;
         status: import("@prisma/client").$Enums.VehicleStatus;
-    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
-    remove(id: string): import("@prisma/client").Prisma.Prisma__VehicleClient<{
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, Prisma.PrismaClientOptions>;
+    remove(id: string): Prisma.Prisma__VehicleClient<{
         type: string;
         id: string;
         createdAt: Date;
@@ -63,5 +64,5 @@ export declare class VehiclesService {
         odometer: number;
         acquisitionCost: number;
         status: import("@prisma/client").$Enums.VehicleStatus;
-    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, Prisma.PrismaClientOptions>;
 }

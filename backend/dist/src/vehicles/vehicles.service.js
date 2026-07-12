@@ -12,15 +12,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VehiclesService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const client_1 = require("@prisma/client");
 let VehiclesService = class VehiclesService {
     prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createVehicleDto) {
-        return this.prisma.vehicle.create({
-            data: createVehicleDto,
-        });
+    async create(createVehicleDto) {
+        try {
+            return await this.prisma.vehicle.create({
+                data: createVehicleDto,
+            });
+        }
+        catch (error) {
+            if (error instanceof client_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2002') {
+                    throw new common_1.ConflictException('Vehicle with this registration number already exists');
+                }
+            }
+            throw error;
+        }
     }
     findAll() {
         return this.prisma.vehicle.findMany();
