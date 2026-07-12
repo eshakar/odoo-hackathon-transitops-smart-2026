@@ -20,20 +20,28 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  // Temporary hardcoded mock user for development and testing role-based UI
-  const [user, setUser] = useState<User | null>({
-    id: 'mock-uuid',
-    name: 'Raven K.',
-    role: 'DRIVER', // Default to DRIVER so Trips dashboard shows
-    token: 'mock-jwt-token'
-  });
+  const [user, setUser] = useState<User | null>(null);
+
+  // Load user from localStorage on mount
+  React.useEffect(() => {
+    const storedUser = localStorage.getItem('transitops_user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error('Failed to parse user from localStorage');
+      }
+    }
+  }, []);
 
   const login = (newUser: User) => {
     setUser(newUser);
+    localStorage.setItem('transitops_user', JSON.stringify(newUser));
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('transitops_user');
   };
 
   return (
