@@ -6,23 +6,23 @@ export declare class FinancesController {
     constructor(financesService: FinancesService);
     addFuelLog(createFuelLogDto: CreateFuelLogDto): Promise<{
         id: string;
-        liters: number;
-        cost: number;
-        date: Date;
         createdAt: Date;
         updatedAt: Date;
         vehicleId: string;
+        cost: number;
+        date: Date;
         tripId: string | null;
+        liters: number;
     }>;
     addExpense(createExpenseDto: CreateExpenseDto): Promise<{
+        description: string | null;
         id: string;
-        date: Date;
         createdAt: Date;
         updatedAt: Date;
         vehicleId: string | null;
+        date: Date;
         amount: number;
         category: import("@prisma/client").$Enums.ExpenseCategory;
-        description: string | null;
     }>;
     getVehicleOperationalCost(vehicleId: string): Promise<{
         vehicleId: string;
@@ -35,48 +35,48 @@ export declare class FinancesController {
     }>;
     findAllFuelLogs(): import("@prisma/client").Prisma.PrismaPromise<({
         vehicle: {
+            type: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            status: import("@prisma/client").$Enums.VehicleStatus;
             registrationNumber: string;
             nameModel: string;
-            type: string;
             maxLoadCapacity: number;
             odometer: number;
             acquisitionCost: number;
+            status: import("@prisma/client").$Enums.VehicleStatus;
         };
     } & {
         id: string;
-        liters: number;
-        cost: number;
-        date: Date;
         createdAt: Date;
         updatedAt: Date;
         vehicleId: string;
+        cost: number;
+        date: Date;
         tripId: string | null;
+        liters: number;
     })[]>;
     findAllExpenses(): import("@prisma/client").Prisma.PrismaPromise<({
         vehicle: {
+            type: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            status: import("@prisma/client").$Enums.VehicleStatus;
             registrationNumber: string;
             nameModel: string;
-            type: string;
             maxLoadCapacity: number;
             odometer: number;
             acquisitionCost: number;
+            status: import("@prisma/client").$Enums.VehicleStatus;
         } | null;
     } & {
+        description: string | null;
         id: string;
-        date: Date;
         createdAt: Date;
         updatedAt: Date;
         vehicleId: string | null;
+        date: Date;
         amount: number;
         category: import("@prisma/client").$Enums.ExpenseCategory;
-        description: string | null;
     })[]>;
 }
