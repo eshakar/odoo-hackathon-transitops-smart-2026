@@ -63,10 +63,33 @@ let ReportsService = class ReportsService {
             }
             totalROI += a.roi;
         });
+        const completedTrips = await this.prisma.trip.findMany({
+            where: { status: 'COMPLETED' },
+            select: { revenue: true, createdAt: true },
+        });
+        const monthlyRevenueMap = {};
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const now = new Date();
+        for (let i = 5; i >= 0; i--) {
+            const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            monthlyRevenueMap[`${months[d.getMonth()]} ${d.getFullYear()}`] = 0;
+        }
+        completedTrips.forEach(t => {
+            const d = new Date(t.createdAt);
+            const key = `${months[d.getMonth()]} ${d.getFullYear()}`;
+            if (monthlyRevenueMap[key] !== undefined) {
+                monthlyRevenueMap[key] += (t.revenue || 0);
+            }
+        });
+        const monthlyRevenue = Object.keys(monthlyRevenueMap).map(key => ({
+            month: key,
+            revenue: monthlyRevenueMap[key],
+        }));
         return {
             averageFuelEfficiency: validEfficiencyCount > 0 ? parseFloat((totalEfficiency / validEfficiencyCount).toFixed(2)) : 0,
             averageFleetROI: vehicles.length > 0 ? parseFloat((totalROI / vehicles.length).toFixed(4)) : 0,
             vehicleBreakdown: allAnalytics,
+            monthlyRevenue,
         };
     }
     async generateCsvReport() {

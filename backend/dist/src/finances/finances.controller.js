@@ -42,6 +42,9 @@ let FinancesController = class FinancesController {
     findAllExpenses() {
         return this.financesService.findAllExpenses();
     }
+    getOverallSummary() {
+        return this.financesService.getOverallSummary();
+    }
 };
 exports.FinancesController = FinancesController;
 __decorate([
@@ -87,6 +90,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], FinancesController.prototype, "findAllExpenses", null);
+__decorate([
+    (0, common_1.Get)('summary'),
+    (0, roles_decorator_1.Roles)(client_1.Role.FINANCIAL_ANALYST),
+    (0, swagger_1.ApiOperation)({ summary: 'Get overall financial summary (Financial Analyst only)' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], FinancesController.prototype, "getOverallSummary", null);
 exports.FinancesController = FinancesController = __decorate([
     (0, swagger_1.ApiTags)('Finances'),
     (0, swagger_1.ApiBearerAuth)(),

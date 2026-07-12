@@ -8,6 +8,11 @@ export class CreateExpenseDto {
   @IsUUID()
   vehicleId?: string;
 
+  @ApiProperty({ example: 'c1b2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e', description: 'Optional UUID of a Trip', required: false })
+  @IsOptional()
+  @IsUUID()
+  tripId?: string;
+
   @ApiProperty({ example: 450.5, description: 'Amount of the expense' })
   @IsNumber()
   @IsNotEmpty()

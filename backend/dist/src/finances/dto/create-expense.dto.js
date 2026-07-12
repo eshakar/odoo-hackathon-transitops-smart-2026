@@ -15,6 +15,7 @@ const swagger_1 = require("@nestjs/swagger");
 const client_1 = require("@prisma/client");
 class CreateExpenseDto {
     vehicleId;
+    tripId;
     amount;
     category;
     description;
@@ -27,6 +28,12 @@ __decorate([
     (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
 ], CreateExpenseDto.prototype, "vehicleId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'c1b2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e', description: 'Optional UUID of a Trip', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], CreateExpenseDto.prototype, "tripId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 450.5, description: 'Amount of the expense' }),
     (0, class_validator_1.IsNumber)(),

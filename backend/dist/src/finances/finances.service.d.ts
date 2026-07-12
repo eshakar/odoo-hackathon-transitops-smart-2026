@@ -21,6 +21,7 @@ export declare class FinancesService {
         updatedAt: Date;
         vehicleId: string | null;
         date: Date;
+        tripId: string | null;
         amount: number;
         category: import("@prisma/client").$Enums.ExpenseCategory;
     }>;
@@ -31,6 +32,12 @@ export declare class FinancesService {
             fuel: number;
             otherExpenses: number;
         };
+        totalOperationalCost: number;
+    }>;
+    getOverallSummary(): Promise<{
+        totalFuelCost: number;
+        totalMaintenanceCost: number;
+        totalExpenses: number;
         totalOperationalCost: number;
     }>;
     findAllFuelLogs(): import("@prisma/client").Prisma.PrismaPromise<({
@@ -46,6 +53,19 @@ export declare class FinancesService {
             acquisitionCost: number;
             status: import("@prisma/client").$Enums.VehicleStatus;
         };
+        trip: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: import("@prisma/client").$Enums.TripStatus;
+            vehicleId: string;
+            source: string;
+            destination: string;
+            driverId: string;
+            cargoWeight: number;
+            plannedDistance: number;
+            revenue: number | null;
+        } | null;
     } & {
         id: string;
         createdAt: Date;
@@ -69,6 +89,19 @@ export declare class FinancesService {
             acquisitionCost: number;
             status: import("@prisma/client").$Enums.VehicleStatus;
         } | null;
+        trip: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: import("@prisma/client").$Enums.TripStatus;
+            vehicleId: string;
+            source: string;
+            destination: string;
+            driverId: string;
+            cargoWeight: number;
+            plannedDistance: number;
+            revenue: number | null;
+        } | null;
     } & {
         description: string | null;
         id: string;
@@ -76,6 +109,7 @@ export declare class FinancesService {
         updatedAt: Date;
         vehicleId: string | null;
         date: Date;
+        tripId: string | null;
         amount: number;
         category: import("@prisma/client").$Enums.ExpenseCategory;
     })[]>;

@@ -21,6 +21,10 @@ export declare class ReportsService {
             totalRevenue: number;
             roi: number;
         }[];
+        monthlyRevenue: {
+            month: string;
+            revenue: number;
+        }[];
     }>;
     generateCsvReport(): Promise<string>;
 }

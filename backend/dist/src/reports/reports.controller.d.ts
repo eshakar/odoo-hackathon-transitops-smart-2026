@@ -14,6 +14,10 @@ export declare class ReportsController {
             totalRevenue: number;
             roi: number;
         }[];
+        monthlyRevenue: {
+            month: string;
+            revenue: number;
+        }[];
     }>;
     getVehicleAnalytics(vehicleId: string): Promise<{
         vehicleId: string;

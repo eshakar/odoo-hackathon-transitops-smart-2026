@@ -38,7 +38,10 @@ export class MaintenanceService {
   }
 
   findAll() {
-    return this.prisma.maintenanceLog.findMany();
+    return this.prisma.maintenanceLog.findMany({
+      include: { vehicle: true },
+      orderBy: { createdAt: 'desc' }
+    });
   }
 
   findOne(id: number) {

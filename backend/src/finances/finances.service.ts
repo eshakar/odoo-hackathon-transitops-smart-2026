@@ -30,16 +30,22 @@ export class FinancesService {
   }
 
   async addExpense(createExpenseDto: CreateExpenseDto) {
-    const { vehicleId, amount, category, description, date } = createExpenseDto;
+    const { vehicleId, tripId, amount, category, description, date } = createExpenseDto;
 
     if (vehicleId) {
       const vehicle = await this.prisma.vehicle.findUnique({ where: { id: vehicleId } });
       if (!vehicle) throw new NotFoundException('Vehicle not found');
     }
 
+    if (tripId) {
+      const trip = await this.prisma.trip.findUnique({ where: { id: tripId } });
+      if (!trip) throw new NotFoundException('Trip not found');
+    }
+
     return this.prisma.expense.create({
       data: {
         ...(vehicleId && { vehicleId }),
+        ...(tripId && { tripId }),
         amount,
         category,
         ...(description && { description }),
@@ -86,11 +92,46 @@ export class FinancesService {
     };
   }
 
+  async getOverallSummary() {
+    // Total Fuel
+    const fuelLogs = await this.prisma.fuelLog.aggregate({
+      _sum: { cost: true },
+    });
+    const totalFuelCost = fuelLogs._sum.cost || 0;
+
+    // Total Maintenance
+    const maintenanceLogs = await this.prisma.maintenanceLog.aggregate({
+      _sum: { cost: true },
+    });
+    const totalMaintenanceCost = maintenanceLogs._sum.cost || 0;
+
+    // Total Expenses
+    const expenses = await this.prisma.expense.aggregate({
+      _sum: { amount: true },
+    });
+    const totalExpenses = expenses._sum.amount || 0;
+
+    const totalOperationalCost = totalFuelCost + totalMaintenanceCost + totalExpenses;
+
+    return {
+      totalFuelCost,
+      totalMaintenanceCost,
+      totalExpenses,
+      totalOperationalCost,
+    };
+  }
+
   findAllFuelLogs() {
-    return this.prisma.fuelLog.findMany({ include: { vehicle: true } });
+    return this.prisma.fuelLog.findMany({ 
+      include: { vehicle: true, trip: true },
+      orderBy: { date: 'desc' }
+    });
   }
 
   findAllExpenses() {
-    return this.prisma.expense.findMany({ include: { vehicle: true } });
+    return this.prisma.expense.findMany({ 
+      include: { vehicle: true, trip: true },
+      orderBy: { date: 'desc' }
+    });
   }
 }

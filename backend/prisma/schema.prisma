@@ -118,6 +118,7 @@ model Trip {
   updatedAt       DateTime   @updatedAt
 
   fuelLogs FuelLog[]
+  expenses Expense[]
 }
 
 model MaintenanceLog {
@@ -149,6 +150,8 @@ model Expense {
   id          String          @id @default(uuid())
   vehicle     Vehicle?        @relation(fields: [vehicleId], references: [id])
   vehicleId   String?
+  trip        Trip?           @relation(fields: [tripId], references: [id])
+  tripId      String?
   amount      Float
   category    ExpenseCategory
   description String?

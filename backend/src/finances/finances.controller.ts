@@ -49,4 +49,11 @@ export class FinancesController {
   findAllExpenses() {
     return this.financesService.findAllExpenses();
   }
+
+  @Get('summary')
+  @Roles(Role.FINANCIAL_ANALYST)
+  @ApiOperation({ summary: 'Get overall financial summary (Financial Analyst only)' })
+  getOverallSummary() {
+    return this.financesService.getOverallSummary();
+  }
 }
