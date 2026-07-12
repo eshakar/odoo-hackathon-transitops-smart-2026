@@ -29,19 +29,23 @@ export class MaintenanceController {
   }
 
   @Get(':id')
+  @Roles(Role.FLEET_MANAGER)
+  @ApiOperation({ summary: 'Get a single maintenance log (Fleet Manager only)' })
   findOne(@Param('id') id: string) {
     return this.maintenanceService.findOne(+id);
   }
 
   @Patch(':id')
   @Roles(Role.FLEET_MANAGER)
+  @ApiOperation({ summary: 'Update a maintenance log (Fleet Manager only)' })
   update(@Param('id') id: string, @Body() updateMaintenanceDto: UpdateMaintenanceDto) {
-    return this.maintenanceService.update(+id, updateMaintenanceDto);
+    return this.maintenanceService.update(id, updateMaintenanceDto);
   }
 
   @Delete(':id')
   @Roles(Role.FLEET_MANAGER)
+  @ApiOperation({ summary: 'Delete a maintenance log (Fleet Manager only)' })
   remove(@Param('id') id: string) {
-    return this.maintenanceService.remove(+id);
+    return this.maintenanceService.remove(id);
   }
 }

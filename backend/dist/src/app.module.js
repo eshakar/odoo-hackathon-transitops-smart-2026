@@ -15,12 +15,13 @@ const auth_module_1 = require("./auth/auth.module");
 const vehicles_module_1 = require("./vehicles/vehicles.module");
 const maintenance_module_1 = require("./maintenance/maintenance.module");
 const drivers_module_1 = require("./drivers/drivers.module");
+const trips_module_1 = require("./trips/trips.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule, auth_module_1.AuthModule, vehicles_module_1.VehiclesModule, maintenance_module_1.MaintenanceModule, drivers_module_1.DriversModule],
+        imports: [prisma_module_1.PrismaModule, auth_module_1.AuthModule, vehicles_module_1.VehiclesModule, maintenance_module_1.MaintenanceModule, drivers_module_1.DriversModule, trips_module_1.TripsModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

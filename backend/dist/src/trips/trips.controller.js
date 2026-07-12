@@ -12,87 +12,88 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MaintenanceController = void 0;
+exports.TripsController = void 0;
 const common_1 = require("@nestjs/common");
-const maintenance_service_1 = require("./maintenance.service");
-const create_maintenance_dto_1 = require("./dto/create-maintenance.dto");
-const update_maintenance_dto_1 = require("./dto/update-maintenance.dto");
+const trips_service_1 = require("./trips.service");
+const create_trip_dto_1 = require("./dto/create-trip.dto");
+const update_trip_dto_1 = require("./dto/update-trip.dto");
 const swagger_1 = require("@nestjs/swagger");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 const roles_guard_1 = require("../auth/guards/roles.guard");
 const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const client_1 = require("@prisma/client");
-let MaintenanceController = class MaintenanceController {
-    maintenanceService;
-    constructor(maintenanceService) {
-        this.maintenanceService = maintenanceService;
+let TripsController = class TripsController {
+    tripsService;
+    constructor(tripsService) {
+        this.tripsService = tripsService;
     }
-    create(createMaintenanceDto) {
-        return this.maintenanceService.create(createMaintenanceDto);
+    create(createTripDto) {
+        return this.tripsService.create(createTripDto);
     }
     findAll() {
-        return this.maintenanceService.findAll();
+        return this.tripsService.findAll();
     }
     findOne(id) {
-        return this.maintenanceService.findOne(+id);
+        return this.tripsService.findOne(id);
     }
-    update(id, updateMaintenanceDto) {
-        return this.maintenanceService.update(id, updateMaintenanceDto);
+    update(id, updateTripDto) {
+        return this.tripsService.update(id, updateTripDto);
     }
     remove(id) {
-        return this.maintenanceService.remove(id);
+        return this.tripsService.remove(id);
     }
 };
-exports.MaintenanceController = MaintenanceController;
+exports.TripsController = TripsController;
 __decorate([
     (0, common_1.Post)(),
-    (0, roles_decorator_1.Roles)(client_1.Role.FLEET_MANAGER),
-    (0, swagger_1.ApiOperation)({ summary: 'Create a maintenance record (Fleet Manager only)' }),
+    (0, roles_decorator_1.Roles)(client_1.Role.DRIVER),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new trip (Dispatcher only)' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_maintenance_dto_1.CreateMaintenanceDto]),
+    __metadata("design:paramtypes", [create_trip_dto_1.CreateTripDto]),
     __metadata("design:returntype", void 0)
-], MaintenanceController.prototype, "create", null);
+], TripsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Get all maintenance records' }),
+    (0, roles_decorator_1.Roles)(client_1.Role.DRIVER),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all trips (Dispatcher only)' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], MaintenanceController.prototype, "findAll", null);
+], TripsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, roles_decorator_1.Roles)(client_1.Role.FLEET_MANAGER),
-    (0, swagger_1.ApiOperation)({ summary: 'Get a single maintenance log (Fleet Manager only)' }),
+    (0, roles_decorator_1.Roles)(client_1.Role.DRIVER),
+    (0, swagger_1.ApiOperation)({ summary: 'Get a single trip (Dispatcher only)' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], MaintenanceController.prototype, "findOne", null);
+], TripsController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    (0, roles_decorator_1.Roles)(client_1.Role.FLEET_MANAGER),
-    (0, swagger_1.ApiOperation)({ summary: 'Update a maintenance log (Fleet Manager only)' }),
+    (0, common_1.Patch)(':id/status'),
+    (0, roles_decorator_1.Roles)(client_1.Role.DRIVER),
+    (0, swagger_1.ApiOperation)({ summary: 'Update trip lifecycle status (Dispatcher only)' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_maintenance_dto_1.UpdateMaintenanceDto]),
+    __metadata("design:paramtypes", [String, update_trip_dto_1.UpdateTripDto]),
     __metadata("design:returntype", void 0)
-], MaintenanceController.prototype, "update", null);
+], TripsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, roles_decorator_1.Roles)(client_1.Role.FLEET_MANAGER),
-    (0, swagger_1.ApiOperation)({ summary: 'Delete a maintenance log (Fleet Manager only)' }),
+    (0, roles_decorator_1.Roles)(client_1.Role.DRIVER),
+    (0, swagger_1.ApiOperation)({ summary: 'Trips cannot be deleted (Dispatcher only)' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], MaintenanceController.prototype, "remove", null);
-exports.MaintenanceController = MaintenanceController = __decorate([
-    (0, swagger_1.ApiTags)('Maintenance'),
+], TripsController.prototype, "remove", null);
+exports.TripsController = TripsController = __decorate([
+    (0, swagger_1.ApiTags)('Trips'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, common_1.Controller)('maintenance'),
-    __metadata("design:paramtypes", [maintenance_service_1.MaintenanceService])
-], MaintenanceController);
-//# sourceMappingURL=maintenance.controller.js.map
+    (0, common_1.Controller)('trips'),
+    __metadata("design:paramtypes", [trips_service_1.TripsService])
+], TripsController);
+//# sourceMappingURL=trips.controller.js.map
