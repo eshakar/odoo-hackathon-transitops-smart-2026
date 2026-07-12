@@ -101,7 +101,7 @@ export default function DashboardPage() {
         
         {/* RECENT TRIPS TABLE (2/3 width) */}
         <div className="lg:col-span-2">
-          <h2 className="text-xl font-handwriting tracking-widest uppercase mb-4 text-gray-300">
+          <h2 className="text-xl font-semibold tracking-widest uppercase mb-4 text-gray-300">
             Recent Trips
           </h2>
           <div className="bg-[#15171E] rounded-xl overflow-hidden border border-[#2C2E3B]">
@@ -115,7 +115,7 @@ export default function DashboardPage() {
                   <th className="py-4 px-6 font-medium">ETA</th>
                 </tr>
               </thead>
-              <tbody className="font-handwriting text-xl text-gray-300">
+              <tbody className="font-semibold text-xl text-gray-300">
                 {recentTrips.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="text-center py-6 text-gray-500 font-sans text-sm">No recent trips</td>
@@ -144,7 +144,7 @@ export default function DashboardPage() {
 
         {/* VEHICLE STATUS BREAKDOWN (1/3 width) */}
         <div>
-          <h2 className="text-xl font-handwriting tracking-widest uppercase mb-4 text-gray-300">
+          <h2 className="text-xl font-semibold tracking-widest uppercase mb-4 text-gray-300">
             Vehicle Status
           </h2>
           <div className="space-y-6 bg-[#15171E] p-6 rounded-xl border border-[#2C2E3B]">
@@ -188,13 +188,13 @@ export default function DashboardPage() {
 const KPICard = ({ title, value, color }: { title: string, value: string | number, color: string }) => (
   <div className={`bg-[#15171E] border border-[#2C2E3B] border-l-4 ${color} rounded-lg p-4 flex flex-col justify-between`}>
     <h4 className="text-gray-500 font-sans text-[10px] tracking-widest uppercase mb-2">{title}</h4>
-    <div className="text-3xl font-handwriting text-white">{value}</div>
+    <div className="text-3xl font-semibold text-white">{value}</div>
   </div>
 );
 
 const StatusBar = ({ label, count, width, color }: { label: string, count: number, width: string, color: string }) => (
   <div>
-    <div className="flex justify-between font-handwriting text-xl text-gray-300 mb-1">
+    <div className="flex justify-between font-semibold text-xl text-gray-300 mb-1">
       <span>{label}</span>
       <span>{count}</span>
     </div>

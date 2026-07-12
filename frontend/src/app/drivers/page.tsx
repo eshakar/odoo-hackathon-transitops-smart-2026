@@ -63,7 +63,7 @@ export default function DriversPage() {
       <div className="flex justify-end mb-6">
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="bg-[#D98725] text-white px-5 py-2 rounded-md font-handwriting text-2xl tracking-wide shadow-md shadow-[#D98725]/20 hover:bg-[#c2751f] transition-colors flex items-center gap-2"
+          className="bg-[#D98725] text-white px-5 py-2 rounded-md font-semibold text-2xl tracking-wide shadow-md shadow-[#D98725]/20 hover:bg-[#c2751f] transition-colors flex items-center gap-2"
         >
           <span>+</span> Add Driver
         </button>
@@ -84,7 +84,7 @@ export default function DriversPage() {
                 <th className="py-4 px-6 font-medium">Status</th>
               </tr>
             </thead>
-            <tbody className="font-handwriting text-xl text-gray-200">
+            <tbody className="font-semibold text-xl text-gray-200">
               {isLoading ? (
                 <tr>
                   <td colSpan={8} className="text-center py-10 text-gray-500 font-sans">

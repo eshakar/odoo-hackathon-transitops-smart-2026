@@ -44,16 +44,6 @@ export const Topbar = ({ onMenuClick }: TopbarProps) => {
           </svg>
         </button>
 
-        {/* Search Bar */}
-        <div className="hidden md:block w-96">
-          <div className="relative">
-            <input 
-              type="text" 
-              placeholder="Search..." 
-              className="w-full bg-[#252836] border border-[#2C2E3B] rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-[#FF8A00] focus:ring-1 focus:ring-[#FF8A00] transition-colors"
-            />
-          </div>
-        </div>
       </div>
 
       {/* User Profile */}

@@ -68,7 +68,7 @@ export default function SettingsPage() {
         
         {/* Left Column: General Settings Form */}
         <div>
-          <h2 className="text-2xl font-handwriting tracking-widest uppercase mb-8 text-gray-300">
+          <h2 className="text-2xl font-semibold tracking-widest uppercase mb-8 text-gray-300">
             General
           </h2>
           
@@ -82,7 +82,7 @@ export default function SettingsPage() {
                 value={formData.depotName}
                 onChange={handleChange}
                 disabled={isLoading}
-                className="w-full bg-[#15171E] border border-[#2C2E3B] rounded-lg py-3 px-4 font-handwriting text-xl text-white focus:outline-none focus:border-[#4A90E2] transition-colors"
+                className="w-full bg-[#15171E] border border-[#2C2E3B] rounded-lg py-3 px-4 font-semibold text-xl text-white focus:outline-none focus:border-[#4A90E2] transition-colors"
               />
             </div>
 
@@ -95,7 +95,7 @@ export default function SettingsPage() {
                 value={formData.currency}
                 onChange={handleChange}
                 disabled={isLoading}
-                className="w-full bg-[#15171E] border border-[#2C2E3B] rounded-lg py-3 px-4 font-handwriting text-xl text-white focus:outline-none focus:border-[#4A90E2] transition-colors"
+                className="w-full bg-[#15171E] border border-[#2C2E3B] rounded-lg py-3 px-4 font-semibold text-xl text-white focus:outline-none focus:border-[#4A90E2] transition-colors"
               />
             </div>
 
@@ -108,7 +108,7 @@ export default function SettingsPage() {
                 value={formData.distanceUnit}
                 onChange={handleChange}
                 disabled={isLoading}
-                className="w-full bg-[#15171E] border border-[#2C2E3B] rounded-lg py-3 px-4 font-handwriting text-xl text-white focus:outline-none focus:border-[#4A90E2] transition-colors"
+                className="w-full bg-[#15171E] border border-[#2C2E3B] rounded-lg py-3 px-4 font-semibold text-xl text-white focus:outline-none focus:border-[#4A90E2] transition-colors"
               />
             </div>
 
@@ -116,7 +116,7 @@ export default function SettingsPage() {
               <button 
                 type="submit" 
                 disabled={isSaving || isLoading}
-                className="bg-[#5984A4] text-black font-handwriting text-xl px-6 py-2 rounded-lg hover:bg-[#436A8A] transition-colors disabled:opacity-50 shadow-md"
+                className="bg-[#5984A4] text-black font-semibold text-xl px-6 py-2 rounded-lg hover:bg-[#436A8A] transition-colors disabled:opacity-50 shadow-md"
               >
                 {isSaving ? 'Saving...' : 'Save changes'}
               </button>
@@ -132,7 +132,7 @@ export default function SettingsPage() {
 
         {/* Right Column: RBAC Matrix */}
         <div>
-          <h2 className="text-2xl font-handwriting tracking-widest uppercase mb-8 text-gray-300">
+          <h2 className="text-2xl font-semibold tracking-widest uppercase mb-8 text-gray-300">
             Role-Based Access (RBAC)
           </h2>
           
@@ -149,7 +149,7 @@ export default function SettingsPage() {
                   <th className="py-4 font-medium text-center">Analytics</th>
                 </tr>
               </thead>
-              <tbody className="font-handwriting text-xl text-gray-300">
+              <tbody className="font-semibold text-xl text-gray-300">
                 
                 <tr className="border-b border-[#2C2E3B]/50 hover:bg-[#1A1C23]/30 transition-colors">
                   <td className="py-4 font-sans text-lg tracking-wide">Fleet Manager</td>
