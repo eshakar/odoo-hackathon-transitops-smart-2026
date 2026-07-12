@@ -2,12 +2,16 @@
 
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../../context/AuthContext";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,15 +23,30 @@ export default function SignInPage() {
         password,
         role,
       });
-      console.log("Sign-in successful", response.data);
-      // Optional: Handle success redirect here
+      
+      const { access_token, user } = response.data;
+      
+      // Update global auth state
+      login({
+        id: user.id || 'mock-id',
+        name: user.name || 'System User',
+        role: user.role,
+        token: access_token,
+      });
+
+      // Redirect to the dashboard
+      router.push("/dashboard");
     } catch (err: any) {
       console.error("Sign-in error", err);
-      // Fallback message mirrors the error state tooltip from the template
-      setError(
-        err.response?.data?.message ||
-          "Invalid credentials.\nAccount locked after 5 failed attempts."
-      );
+      let errorMessage = "Invalid credentials.\nAccount locked after 5 failed attempts.";
+      if (err.response?.data?.message) {
+        if (Array.isArray(err.response.data.message)) {
+          errorMessage = err.response.data.message.join("\n");
+        } else if (typeof err.response.data.message === 'string') {
+          errorMessage = err.response.data.message;
+        }
+      }
+      setError(errorMessage);
     }
   };
 
@@ -186,7 +205,7 @@ export default function SignInPage() {
               >
                 <option value="" disabled>Select the role</option>
                 <option value="FLEET_MANAGER">Fleet Manager</option>
-                <option value="DISPATCHER">Dispatcher</option>
+                <option value="DRIVER">Dispatcher</option>
                 <option value="SAFETY_OFFICER">Safety Officer</option>
                 <option value="FINANCIAL_ANALYST">Financial Analyst</option>
               </select>
